@@ -1,0 +1,220 @@
+[
+  {
+    "query": "What is the policy on data privacy?",
+    "retriever_alpha": 0.5,
+    "retrieval_k": 5,
+    "latency_ms": 1250.5,
+    "confidence_score": 0.92,
+    "factuality_pass": true,
+    "timestamp": "2025-11-13T01:48:01.607030"
+  },
+  {
+    "query": "What are the main policies regarding climate change?",
+    "retriever_alpha": 0.7,
+    "retrieval_k": 3,
+    "latency_ms": 980.0,
+    "confidence_score": 0.88,
+    "factuality_pass": true,
+    "timestamp": "2025-11-13T01:48:01.607685"
+  },
+  {
+    "query": "Summarize how the OECD Employment Outlook 2024 links the net-zero transition to changes in labour demand and job displacement risks.",
+    "latency_ms": 110446.66886329651,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 6,
+    "confidence_score": 0.7607936263084412,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:17.171853"
+  },
+  {
+    "query": "Compare the IMF and OECD projections for global GDP growth in 2025. Highlight any differences in regional forecasts and underlying assumptions.",
+    "latency_ms": 4222.832918167114,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.035940174013376236,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:21.395466"
+  },
+  {
+    "query": "Identify OECD recommendations to support rural or low-income workers affected by green transition policies.",
+    "latency_ms": 4119.527101516724,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.032299116253852844,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:25.515767"
+  },
+  {
+    "query": "Based on OECD Economic Outlook 2024, what are the main drivers of inflation persistence and how do they differ from IMF assessments?",
+    "latency_ms": 4185.730218887329,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": -0.0738571360707283,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:29.702180"
+  },
+  {
+    "query": "Using 'How\u2019s Life? 2024', outline the major global well-being inequalities and resilience gaps that have widened post-pandemic.",
+    "latency_ms": 3902.1122455596924,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.09653876721858978,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:33.605066"
+  },
+  {
+    "query": "Summarize UNCTAD\u2019s key recommendations for enhancing trade resilience and sustainability in the 2024 Trade and Development Report.",
+    "latency_ms": 3893.04780960083,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.018764447420835495,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:37.499046"
+  },
+  {
+    "query": "Compare findings from 'AI, Productivity and Labour Market Dynamics' with the OECD Employment Outlook regarding the impact of automation on job quality.",
+    "latency_ms": 3681.797742843628,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.019861802458763123,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:41.183945"
+  },
+  {
+    "query": "From WHO\u2019s 2024 Global Health Report, extract insights on how economic conditions influence access to healthcare and well-being.",
+    "latency_ms": 4299.463987350464,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.039990536868572235,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:45.484426"
+  },
+  {
+    "query": "Across all uploaded reports, identify at least two cross-cutting risks that simultaneously affect economic growth, health outcomes, and labour markets.",
+    "latency_ms": 3887.0346546173096,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": -0.008895086124539375,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:49.372422"
+  },
+  {
+    "query": "What fiscal and policy reforms are commonly proposed across OECD, IMF, and UNCTAD documents to ensure sustainable global recovery?",
+    "latency_ms": 3421.888828277588,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": -0.014955718070268631,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:52.795293"
+  },
+  {
+    "query": "Identify how gender and youth employment gaps are discussed across OECD and UNCTAD reports, and the main policy measures proposed to address them.",
+    "latency_ms": 4259.406328201294,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.026556219905614853,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:45:57.055697"
+  },
+  {
+    "query": "Compare how different reports conceptualize 'inclusive growth' and its relationship with digital transformation and AI deployment.",
+    "latency_ms": 3989.586353302002,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.012097558006644249,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:46:01.049117"
+  },
+  {
+    "query": "Which policy areas do OECD, IMF, and WHO all highlight as critical for post-pandemic resilience and productivity growth?",
+    "latency_ms": 89709.51080322266,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.6742784976959229,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:47:30.759696"
+  },
+  {
+    "query": "Summarize international coordination challenges in achieving the UN SDGs mentioned across OECD, UNCTAD, and WHO documents.",
+    "latency_ms": 7058.488845825195,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": -0.06297561526298523,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:47:37.819343"
+  },
+  {
+    "query": "According to all reports, what are the shared priorities for building a sustainable, digital, and inclusive global economy between 2024\u20132030?",
+    "latency_ms": 4606.945991516113,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": -0.02939070202410221,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:47:42.427725"
+  },
+  {
+    "query": "Construct an entity graph linking AI policy, labour market reforms, and carbon transition measures mentioned across OECD, IMF, and UNCTAD reports. Identify the most connected policy nodes.",
+    "latency_ms": 5063.103675842285,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": -0.009034942835569382,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:47:47.491946"
+  },
+  {
+    "query": "Using Self-RAG, generate an integrated explanation of how global economic shocks propagate through employment, health, and trade systems as discussed in the IMF, WHO, and UNCTAD reports.",
+    "latency_ms": 4662.205696105957,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": -0.02727200835943222,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:47:52.155225"
+  },
+  {
+    "query": "Create a knowledge graph connecting 'AI-driven productivity', 'skills transformation', and 'green innovation'. Rank entities by centrality to identify the top 3 policy themes.",
+    "latency_ms": 4914.309501647949,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.004710625857114792,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:47:57.070652"
+  },
+  {
+    "query": "Compare fiscal strategies for financing climate and social protection goals across OECD, IMF, and UNCTAD documents. Identify points of convergence and divergence using multi-hop retrieval.",
+    "latency_ms": 5016.644239425659,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": -0.0006839334964752197,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:48:02.088408"
+  },
+  {
+    "query": "Integrate findings from all reports to propose a unified AI-governance framework that balances innovation, employment protection, and health equity. Use advanced RAG retrieval with at least three reasoning hops.",
+    "latency_ms": 89358.3173751831,
+    "retriever_alpha": 0.5,
+    "retrieved_docs_count": 3,
+    "confidence_score": 0.6266981959342957,
+    "factuality_pass": true,
+    "contradictions": 0,
+    "timestamp": "2025-11-13T02:49:31.448404"
+  }
+]
