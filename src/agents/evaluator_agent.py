@@ -94,7 +94,7 @@ class EvaluatorAgent:
 if __name__ == "__main__":
     
     # Load API Key
-    HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY") or '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' # Your key
+    HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY") # Your key
     if not HF_API_KEY:
         raise ValueError("HF_API_KEY not set")
 

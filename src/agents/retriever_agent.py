@@ -3,13 +3,15 @@ import json
 import numpy as np
 from pathlib import Path
 from typing import List, Dict, Any
-
+from dotenv import load_dotenv
 # Pinecone client for dense vector search
 from pinecone import Pinecone, ServerlessSpec 
 
 # BM25 for sparse keyword search
 from rank_bm25 import BM25Okapi
 
+
+load_dotenv()
 class RetrieverAgent:
     """
     This agent is responsible for Task 3: Hybrid Retrieval.

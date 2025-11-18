@@ -12,7 +12,8 @@ class VisualizerAgent:
     """
     This agent is responsible for Task 7:
     1. Plotting confidence trajectories from the memory file.
-    2. Plotting the agent graph (workflow).
+    2. Plotting the main agent graph.
+    3. Plotting the debate agent graph.
     """
     
     def __init__(self, memory_file: str, plot_dir: str):
@@ -45,14 +46,12 @@ class VisualizerAgent:
         
         plt.figure(figsize=(10, 6))
         
-        # Plot confidence score
         self.memory_data['confidence_score'].plot(
             kind='line', 
             marker='o', 
             title='Pipeline Confidence Score Over Time'
         )
         
-        # Add an average line
         avg_confidence = self.memory_data['confidence_score'].mean()
         plt.axhline(
             y=avg_confidence, 
@@ -74,14 +73,12 @@ class VisualizerAgent:
 
     def plot_agent_graph(self):
         """
-        Plots a static graph of the agent pipeline.
+        Plots a static graph of the main agent pipeline.
         Saves to 'agent_graph.png'.
         """
-        print("Plotting agent graph...")
-        
-        G = nx.DiGraph() # A Directed Graph
+        print("Plotting main agent graph...")
+        G = nx.DiGraph() 
 
-        # Add nodes for each agent
         agents = [
             "User Query", "Guardrails (In)", "Planner", "Retriever", 
             "Summarizer", "DebateAgents", "Verifier", "Guardrails (Out)", 
@@ -89,7 +86,6 @@ class VisualizerAgent:
         ]
         G.add_nodes_from(agents)
         
-        # Define the edges (the flow)
         edges = [
             ("User Query", "Guardrails (In)"),
             ("Guardrails (In)", "Planner"),
@@ -99,36 +95,61 @@ class VisualizerAgent:
             ("DebateAgents", "Verifier"),
             ("Verifier", "Guardrails (Out)"),
             ("Guardrails (Out)", "Final Response"),
-            # Memory logging happens throughout (simplified here)
             ("Verifier", "Memory") 
         ]
         G.add_edges_from(edges)
         
-        # Draw the graph
         plt.figure(figsize=(12, 10))
-        
-        # Use a layout that spreads nodes out
         pos = nx.spring_layout(G, k=0.9, iterations=50) 
-        
         nx.draw(
-            G, 
-            pos, 
-            with_labels=True, 
-            node_size=3000, 
-            node_color="#a0cbe2", 
-            font_size=10, 
-            font_weight="bold", 
-            arrows=True, 
-            arrowstyle="->",
+            G, pos, with_labels=True, node_size=3000, node_color="#a0cbe2", 
+            font_size=10, font_weight="bold", arrows=True, arrowstyle="->",
             arrowsize=20
         )
-        
         plt.title("RAG Agent Pipeline Workflow", size=15)
         
         output_file = self.plot_dir / "agent_graph.png"
         plt.savefig(output_file, bbox_inches="tight")
-        print(f"✅ Agent graph saved to {output_file}")
+        print(f"✅ Main agent graph saved to {output_file}")
         plt.close()
+
+    # --- NEW PLOTTING FUNCTION ---
+    def plot_debate_graph(self):
+        """
+        Plots a static graph of the debate sub-workflow.
+        Saves to 'debate_graph.png'.
+        """
+        print("Plotting debate agent graph...")
+        G = nx.DiGraph()
+
+        # Nodes
+        nodes = ["Agent A (Proponent)", "Agent B (Critic)", "Consensus (Editor)", "Check Turns"]
+        G.add_nodes_from(nodes)
+
+        # Edges
+        edges = [
+            ("Agent A (Proponent)", "Check Turns"),
+            ("Agent B (Critic)", "Check Turns"),
+            ("Check Turns", "Agent B (Critic)"),
+            ("Check Turns", "Agent A (Proponent)"),
+            ("Check Turns", "Consensus (Editor)")
+        ]
+        G.add_edges_from(edges)
+
+        plt.figure(figsize=(10, 8))
+        pos = nx.circular_layout(G)
+        nx.draw(
+            G, pos, with_labels=True, node_size=2500, node_color="#ffcccb",
+            font_size=9, font_weight="bold", arrows=True, arrowstyle="->",
+            arrowsize=15, connectionstyle='arc3,rad=0.1'
+        )
+        plt.title("Debate Agent Workflow", size=15)
+        
+        output_file = self.plot_dir / "debate_graph.png"
+        plt.savefig(output_file, bbox_inches="tight")
+        print(f"✅ Debate graph saved to {output_file}")
+        plt.close()
+    # -----------------------------
 
     def run(self):
         """
@@ -139,22 +160,20 @@ class VisualizerAgent:
         else:
             self.plot_confidence_trajectory()
             
-        # The agent graph is static and can always be drawn
+        # The agent graphs are static and can always be drawn
         self.plot_agent_graph()
+        self.plot_debate_graph() # <-- Call the new function
 
 if __name__ == "__main__":
     
     PROJECT_ROOT = Path(__file__).parent.parent.parent
     
-    # Input file (from MemoryAgent)
     MEMORY_FILE = PROJECT_ROOT / "results" / "memory.json"
-    
-    # Output directory (as per your results screenshot)
     PLOT_DIR = PROJECT_ROOT / "results" / "plots"
     
     print("--- Starting Visualizer Agent ---")
     
-    agent = VisualizerAgent(memory_file=MEMORY_FILE, plot_dir=PLOT_DIR)
+    agent = VisualizerAgent(memory_file=str(MEMORY_FILE), plot_dir=str(PLOT_DIR))
     agent.run()
     
     print("--- Visualizer Agent Finished ---")
