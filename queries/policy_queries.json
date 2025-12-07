@@ -1,0 +1,104 @@
+[
+    {
+      "id": 1,
+      "query": "Summarize how the OECD Employment Outlook 2024 links the net-zero transition to changes in labour demand and job displacement risks.",
+      "expected_source": "ac8b3538-en.pdf"
+    },
+    {
+      "id": 2,
+      "query": "Compare the IMF and OECD projections for global GDP growth in 2025. Highlight any differences in regional forecasts and underlying assumptions.",
+      "expected_source": ["ch1.pdf", "d8814e8b-en.pdf"]
+    },
+    {
+      "id": 3,
+      "query": "Identify OECD recommendations to support rural or low-income workers affected by green transition policies.",
+      "expected_source": "ac8b3538-en.pdf"
+    },
+    {
+      "id": 4,
+      "query": "Based on OECD Economic Outlook 2024, what are the main drivers of inflation persistence and how do they differ from IMF assessments?",
+      "expected_source": ["d8814e8b-en.pdf", "ch1.pdf"]
+    },
+    {
+      "id": 5,
+      "query": "Using 'How’s Life? 2024', outline the major global well-being inequalities and resilience gaps that have widened post-pandemic.",
+      "expected_source": "90ba854a-en.pdf"
+    },
+    {
+      "id": 6,
+      "query": "Summarize UNCTAD’s key recommendations for enhancing trade resilience and sustainability in the 2024 Trade and Development Report.",
+      "expected_source": "tdr2024_en.pdf"
+    },
+    {
+      "id": 7,
+      "query": "Compare findings from 'AI, Productivity and Labour Market Dynamics' with the OECD Employment Outlook regarding the impact of automation on job quality.",
+      "expected_source": ["51fed7e9-en.pdf", "ac8b3538-en.pdf"]
+    },
+    {
+      "id": 8,
+      "query": "From WHO’s 2024 Global Health Report, extract insights on how economic conditions influence access to healthcare and well-being.",
+      "expected_source": "9789240094703-eng.pdf"
+    },
+    {
+      "id": 9,
+      "query": "Across all uploaded reports, identify at least two cross-cutting risks that simultaneously affect economic growth, health outcomes, and labour markets.",
+      "expected_source": ["d8814e8b-en.pdf", "ch1.pdf", "9789240094703-eng.pdf"]
+    },
+    {
+      "id": 10,
+      "query": "What fiscal and policy reforms are commonly proposed across OECD, IMF, and UNCTAD documents to ensure sustainable global recovery?",
+      "expected_source": ["d8814e8b-en.pdf", "ch1.pdf", "tdr2024_en.pdf"]
+    },
+    {
+      "id": 11,
+      "query": "Identify how gender and youth employment gaps are discussed across OECD and UNCTAD reports, and the main policy measures proposed to address them.",
+      "expected_source": ["ac8b3538-en.pdf", "tdr2024_en.pdf"]
+    },
+    {
+      "id": 12,
+      "query": "Compare how different reports conceptualize 'inclusive growth' and its relationship with digital transformation and AI deployment.",
+      "expected_source": ["51fed7e9-en.pdf", "ac8b3538-en.pdf", "d8814e8b-en.pdf"]
+    },
+    {
+      "id": 13,
+      "query": "Which policy areas do OECD, IMF, and WHO all highlight as critical for post-pandemic resilience and productivity growth?",
+      "expected_source": ["d8814e8b-en.pdf", "ch1.pdf", "9789240094703-eng.pdf"]
+    },
+    {
+      "id": 14,
+      "query": "Summarize international coordination challenges in achieving the UN SDGs mentioned across OECD, UNCTAD, and WHO documents.",
+      "expected_source": ["tdr2024_en.pdf", "90ba854a-en.pdf", "9789240094703-eng.pdf"]
+    },
+    {
+      "id": 15,
+      "query": "According to all reports, what are the shared priorities for building a sustainable, digital, and inclusive global economy between 2024–2030?",
+      "expected_source": ["ac8b3538-en.pdf", "tdr2024_en.pdf", "d8814e8b-en.pdf"]
+    },
+
+    {
+      "id": 16,
+      "query": "Construct an entity graph linking AI policy, labour market reforms, and carbon transition measures mentioned across OECD, IMF, and UNCTAD reports. Identify the most connected policy nodes.",
+      "expected_source": ["ac8b3538-en.pdf", "51fed7e9-en.pdf", "tdr2024_en.pdf"]
+    },
+    {
+      "id": 17,
+      "query": "Using Self-RAG, generate an integrated explanation of how global economic shocks propagate through employment, health, and trade systems as discussed in the IMF, WHO, and UNCTAD reports.",
+      "expected_source": ["ch1.pdf", "9789240094703-eng.pdf", "tdr2024_en.pdf"]
+    },
+    {
+      "id": 18,
+      "query": "Create a knowledge graph connecting 'AI-driven productivity', 'skills transformation', and 'green innovation'. Rank entities by centrality to identify the top 3 policy themes.",
+      "expected_source": ["51fed7e9-en.pdf", "ac8b3538-en.pdf", "d8814e8b-en.pdf"]
+    },
+    {
+      "id": 19,
+      "query": "Compare fiscal strategies for financing climate and social protection goals across OECD, IMF, and UNCTAD documents. Identify points of convergence and divergence using multi-hop retrieval.",
+      "expected_source": ["d8814e8b-en.pdf", "ch1.pdf", "tdr2024_en.pdf"]
+    },
+    {
+      "id": 20,
+      "query": "Integrate findings from all reports to propose a unified AI-governance framework that balances innovation, employment protection, and health equity. Use advanced RAG retrieval with at least three reasoning hops.",
+      "expected_source": ["51fed7e9-en.pdf", "ac8b3538-en.pdf", "9789240094703-eng.pdf"]
+    }
+  ]
+  
