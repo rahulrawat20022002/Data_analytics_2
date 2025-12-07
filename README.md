@@ -1,6 +1,5 @@
 # 🤖 PolicyNeural: Multi-Agent RAG Pipeline
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![Status](https://img.shields.io/badge/status-Active-green)
 
@@ -17,8 +16,6 @@
 - [Getting Started](#-getting-started)
 - [Usage](#-usage)
 - [Results & Visualization](#-results--visualization)
-- [Contributing](#-contributing)
-- [License](#-license)
 
 ---
 
@@ -137,10 +134,12 @@ Run Retrieval Test: python src/agents/retriever_agent.py
 The system automatically generates insights in the results/ folder:
 
 Topic Modeling: embedding_map.png (t-SNE/PCA projections).
+<img width="3000" height="1800" alt="image" src="https://github.com/user-attachments/assets/a30021b4-42a2-4c20-861b-07dad862d595" />
+
 
 Retrieval Diagnostics: retrieval_ablation.json (Comparing Sparse vs. Dense performance).
+<img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/06b7eb30-4b6b-4473-906d-bbf924f74968" />
 
-Confidence Trajectories: Plots tracking agent confidence across debate rounds.
 
 
 
