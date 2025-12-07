@@ -94,25 +94,37 @@ PolicyNeural/
 └── README.md
 ```
 ## ⚡ Getting Started
-1. Clone the Repository -: ```bash git clone [https://github.com/rahulrawat20022002/Data_analytics_2.git](https://github.com/rahulrawat20022002/Data_analytics_2.git)
+1. Clone the Repository -:
+   ```bash
+   git clone [https://github.com/rahulrawat20022002/Data_analytics_2.git](https://github.com/rahulrawat20022002/Data_analytics_2.git)
   
-2.   Create a Virtual Environment -:```bash python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+2.   Create a Virtual Environment -:
+      ```bash
+     python -m venv venv
+     source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-3. Install Dependencies -: ```bash pip install -r requirements.txt
+3. Install Dependencies -:
+    ```bash
+   pip install -r requirements.txt
 
 4. Configure Environment
-Create a .env file in the root directory and add your API keys -: ```bash PINECONE_API_KEY=your_key_here
-PINECONE_ENV=us-east-1-aws
-OPENAI_API_KEY=your_key_here (if using OpenAI models)
-HUGGINGFACEHUB_API_TOKEN=your_token_here
+Create a .env file in the root directory and add your API keys -:
+   ```bash
+   PINECONE_API_KEY=your_key_here
+   PINECONE_ENV=us-east-1-aws
+   OPENAI_API_KEY=your_key_here (if using OpenAI models)
+   HUGGINGFACEHUB_API_TOKEN=your_token_here
 
 
-🏃 Usage
+## 🏃 Usage
 Run the Full Pipeline
-To ingest PDFs, train the topic model, and start the agent orchestrator: ```bash python src/agents/orchestrator.py
+To ingest PDFs, train the topic model, and start the agent orchestrator:
+   ```bash
+   python src/agents/orchestrator.py
+```
 
-Run Specific Tasks:
+
+## Run Specific Tasks:
 You can test individual components by running their specific agents:
 
 Ingest PDFs: python src/agents/pdf_ingestion_agent.py
@@ -121,7 +133,7 @@ Run Retrieval Test: python src/agents/retriever_agent.py
 
 
 
-📊 Results & Visualization
+## 📊 Results & Visualization
 The system automatically generates insights in the results/ folder:
 
 Topic Modeling: embedding_map.png (t-SNE/PCA projections).
@@ -134,7 +146,7 @@ Confidence Trajectories: Plots tracking agent confidence across debate rounds.
 
 
 
-🔬 Advanced Research (Task 8)
+## 🔬 Advanced Research (Task 8)
 This project includes a research-grade challenge module in src/agents/retriever_experiment_agent.py. It implements alternative architectures beyond standard RAG, such as:
 
 GraphRAG (Entity graphs with NetworkX)
