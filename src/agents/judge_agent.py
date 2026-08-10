@@ -51,11 +51,30 @@ class JudgeAgent:
         self.scale = config_loader.get("evaluation.judge_scale", 5)
         self.pass_threshold = config_loader.get("evaluation.pass_threshold", 4)
 
+        generator_model = config_loader.get("llm.model")
+        self.self_judging = self.MODEL_NAME == generator_model
+        if self.self_judging:
+            # Not fatal -- it is a legitimate fallback when only one model is
+            # available -- but the scores are optimistically biased and every
+            # report must say so rather than presenting them as neutral.
+            print(
+                f"⚠️ Judge model '{self.MODEL_NAME}' is the SAME as the generation "
+                f"model. Scores will be inflated by self-preference bias. "
+                f"Set a different llm.judge_model in config.yaml."
+            )
+
         try:
             ollama.show(self.MODEL_NAME)
         except Exception:
-            print(f"❌ Error: Ollama model '{self.MODEL_NAME}' not found.")
+            # Deliberately fatal, and deliberately NOT falling back to the
+            # generation model: a silent fallback would reintroduce self-judging
+            # without appearing anywhere in the report.
+            print(f"❌ Error: Judge model '{self.MODEL_NAME}' is not available in Ollama.")
             print(f"Please run 'ollama pull {self.MODEL_NAME}' in your terminal.")
+            print(
+                "  (This is a second local model, separate from the generation "
+                "model. Both run locally via Ollama.)"
+            )
             raise
 
         self.language_agent = LanguageAgent()
@@ -224,6 +243,9 @@ class JudgeAgent:
         result = {
             "judge_ok": True,
             "judge_model": self.MODEL_NAME,
+            # Recorded per result so a self-judged score is never mistaken for
+            # a neutral one further down the line.
+            "self_judged": self.self_judging,
             "scale": self.scale,
             "language": language,
             "scores": scores,
@@ -241,6 +263,7 @@ class JudgeAgent:
         return {
             "judge_ok": False,
             "judge_model": self.MODEL_NAME,
+            "self_judged": self.self_judging,
             "scale": self.scale,
             "language": language,
             "scores": {name: {"score": None, "reason": ""} for name in RUBRIC},

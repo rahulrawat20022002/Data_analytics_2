@@ -4,9 +4,20 @@
 llm:
   # Ollama model used by planner / summarizer / debate / verifier.
   model: "mistral:7b"
-  # Model used by the LLM-as-Judge and the evaluation harness. Kept separate so
-  # the judge can be swapped for a stronger model without touching generation.
-  judge_model: "mistral:7b"
+
+  # Model used by the LLM-as-Judge and the evaluation harness.
+  #
+  # This MUST stay different from `model` above. An LLM scoring its own output
+  # shows self-preference bias, and a same-model judge additionally shares the
+  # generator's blind spots -- if the generator states something false because
+  # of a bad prior, a judge with that same prior rates it well-grounded. That
+  # corrupts precisely the dimension the judge exists to measure.
+  #
+  # Pull it separately (it is a second local Ollama model, ~9GB):
+  #   ollama pull qwen2.5:14b-instruct
+  # If that tag errors, plain `qwen2.5:14b` is the same instruct-tuned build.
+  # `llama3.1:8b` is a lighter step up if 14B is too slow on this machine.
+  judge_model: "qwen2.5:14b-instruct"
 
 languages:
   # Language used when detection fails or confidence is too low.
