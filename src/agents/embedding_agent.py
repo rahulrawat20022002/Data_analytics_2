@@ -15,6 +15,8 @@ from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import pandas as pd
 
+import config_loader
+
 # Suppress warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -25,15 +27,25 @@ class EmbeddingAgent:
     1. Generating various embeddings (TF-IDF, Word2Vec, SBERT).
     2. Visualizing and comparing them using PCA/t-SNE.
     """
-    def __init__(self, sbert_model_name: str = 'all-MiniLM-L6-v2'):
-        # Initialize the SBERT model (as per your 'sentence-transformers' spec)
-        # This model is fast and a great baseline.
+    def __init__(self, sbert_model_name: str = None):
+        # Multilingual sentence encoder, read from config.yaml. The default
+        # (paraphrase-multilingual-MiniLM-L12-v2) maps ~50 languages into one
+        # shared vector space, so a German query can retrieve English chunks
+        # and vice versa. It is also 384-dim, matching the existing index spec.
+        if sbert_model_name is None:
+            sbert_model_name = config_loader.get(
+                "embedding.model", "paraphrase-multilingual-MiniLM-L12-v2"
+            )
+        self.model_name = sbert_model_name
         self.sbert_model = SentenceTransformer(sbert_model_name)
-        
-        # Initialize other models
-        self.tfidf_vectorizer = TfidfVectorizer(max_df=0.95, min_df=2, stop_words='english')
-        
-        print(f"✅ EmbeddingAgent initialized with SBERT model: {sbert_model_name}")
+
+        # Initialize other models.
+        # NOTE: stop_words='english' is deliberately dropped -- applying an
+        # English stop list to a multilingual corpus strips nothing from German
+        # text while quietly biasing the English side of the comparison.
+        self.tfidf_vectorizer = TfidfVectorizer(max_df=0.95, min_df=2)
+
+        print(f"✅ EmbeddingAgent initialized with multilingual SBERT model: {sbert_model_name}")
 
     def load_data(self, input_file: str) -> List[str]:
         """
@@ -150,10 +162,12 @@ if __name__ == "__main__":
     INPUT_FILE = PROJECT_ROOT / "results" / "classical_output.json"
     
     # Output file (as per your results folder structure)
-    OUTPUT_PLOT_FILE = PROJECT_ROOT / "results" / "plots" / "embedding_map.png"
-    
-    # Output file for SBERT embeddings (for the *next* agent to use)
-    OUTPUT_EMBEDDINGS_FILE = PROJECT_ROOT / "results" / "sbert_embeddings.npy"
+    OUTPUT_PLOT_FILE = PROJECT_ROOT / "results" / "plots" / "embedding_map_multilingual.png"
+
+    # Output file for SBERT embeddings (for the *next* agent to use).
+    # Written to a new filename so the previous English-only
+    # 'sbert_embeddings.npy' stays intact for comparison.
+    OUTPUT_EMBEDDINGS_FILE = PROJECT_ROOT / "results" / "multilingual_embeddings.npy"
 
     print("--- Starting Embedding Agent ---")
     

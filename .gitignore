@@ -1,3 +1,6 @@
 .env
 __pycache__/
 *.pyc
+
+# Personal Claude Code settings (machine-specific, not for the team)
+.claude/settings.local.json
