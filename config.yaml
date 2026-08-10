@@ -1,0 +1,70 @@
+# Central configuration for the multilingual multi-agent RAG pipeline.
+# Loaded via src/agents/config_loader.py -> get_config()
+
+llm:
+  # Ollama model used by planner / summarizer / debate / verifier.
+  model: "mistral:7b"
+
+  # Model used by the LLM-as-Judge and the evaluation harness.
+  #
+  # This MUST stay different from `model` above. An LLM scoring its own output
+  # shows self-preference bias, and a same-model judge additionally shares the
+  # generator's blind spots -- if the generator states something false because
+  # of a bad prior, a judge with that same prior rates it well-grounded. That
+  # corrupts precisely the dimension the judge exists to measure.
+  #
+  # Pull it separately (it is a second local Ollama model, ~9GB):
+  #   ollama pull qwen2.5:14b-instruct
+  # If that tag errors, plain `qwen2.5:14b` is the same instruct-tuned build.
+  # `llama3.1:8b` is a lighter step up if 14B is too slow on this machine.
+  judge_model: "qwen2.5:14b-instruct"
+
+languages:
+  # Language used when detection fails or confidence is too low.
+  default: "en"
+  # First-class languages: prompts are tuned and the eval set covers these.
+  supported:
+    - "en"
+    - "de"
+  # Human-readable names injected into prompts ("Answer in German.").
+  names:
+    en: "English"
+    de: "German"
+    fr: "French"
+    es: "Spanish"
+    hi: "Hindi"
+  # spaCy pipeline per language. Anything unlisted falls back to the blank
+  # multilingual "xx" pipeline, which tokenizes but does not lemmatize/NER.
+  spacy_models:
+    en: "en_core_web_sm"
+    de: "de_core_news_sm"
+
+embedding:
+  # Multilingual sentence encoder. Also 384-dim, so the Pinecone index spec
+  # from the English setup stays valid -- but the vectors are NOT compatible
+  # with the old all-MiniLM-L6-v2 ones. Re-embed and upsert to a fresh index.
+  model: "paraphrase-multilingual-MiniLM-L12-v2"
+  dimension: 384
+  # Previous English-only model, kept for reference / A-B comparison.
+  legacy_model: "all-MiniLM-L6-v2"
+
+retrieval:
+  # New index name so the existing English index is left untouched.
+  index_name: "policy-rag-index-multilingual"
+  legacy_index_name: "policy-rag-index"
+  cloud: "aws"
+  region: "us-east-1"
+  # Hybrid weighting: alpha * dense + (1 - alpha) * sparse.
+  alpha: 0.5
+  top_k: 5
+
+evaluation:
+  # Judge scores are integers on 1..scale.
+  judge_scale: 5
+  # Cutoffs for hit@k / nDCG@k / MRR.
+  k_values: [1, 3, 5]
+  # A judge score at or above this counts as a "pass" in the aggregate table.
+  pass_threshold: 4
+  eval_set: "queries/multilingual_eval_set.json"
+  report_json: "results/eval_report.json"
+  report_markdown: "results/eval_report.md"

@@ -7,10 +7,17 @@ import ollama
 from sentence_transformers import SentenceTransformer
 from sentence_transformers.util import semantic_search
 
+import config_loader
+
 class VerifierAgent:
-    LLM_MODEL_NAME = "mistral:7b"
-    SIMILARITY_MODEL = "all-MiniLM-L6-v2"
     def __init__(self):
+        self.LLM_MODEL_NAME = config_loader.get("llm.model", "mistral:7b")
+        # Multilingual encoder: with the English-only model, a correct German
+        # answer to an English query scored low purely because of the language
+        # gap, not because it was misaligned.
+        self.SIMILARITY_MODEL = config_loader.get(
+            "embedding.model", "paraphrase-multilingual-MiniLM-L12-v2"
+        )
         try:
             ollama.show(self.LLM_MODEL_NAME)
         except Exception:
@@ -18,7 +25,7 @@ class VerifierAgent:
             print(f"Please run 'ollama pull {self.LLM_MODEL_NAME}' in your terminal.")
             raise
         self.similarity_model = SentenceTransformer(self.SIMILARITY_MODEL)
-        print("✅ VerifierAgent initialized.")
+        print(f"✅ VerifierAgent initialized (similarity: {self.SIMILARITY_MODEL}).")
     def _load_json_data(self, file_path: str) -> List[Dict[str, Any]]:
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -60,6 +67,9 @@ class VerifierAgent:
             [INST]
             You are a fact-checker. Your task is to determine if the "Statement" is
             *directly supported* by the "Context".
+            The Statement and the Context may be written in different languages.
+            Judge the meaning, not the wording: a faithful translation of a
+            supported fact is still "entailment".
             You must respond with *only* one of three labels:
             "entailment", "neutral", or "contradiction".
             Context: "{context_str}"

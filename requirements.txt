@@ -20,6 +20,8 @@ cymem==2.0.11
 dataclasses-json==0.6.7
 distro==1.9.0
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl#sha256=1932429db727d4bff3deed6b34cfc05df17794f4a52eeb26cf8928f7c1a0fb85
+# German pipeline for multilingual preprocessing (tokens, lemmas, NER).
+de_core_news_sm @ https://github.com/explosion/spacy-models/releases/download/de_core_news_sm-3.8.0/de_core_news_sm-3.8.0-py3-none-any.whl
 filelock==3.20.0
 fonttools==4.60.1
 frozenlist==1.8.0
@@ -63,6 +65,9 @@ mypy_extensions==1.1.0
 networkx==3.5
 numexpr==2.14.1
 numpy==2.3.4
+# Local LLM client used by every generation/judge agent. This was imported
+# throughout the codebase but missing from requirements.
+ollama>=0.4.0
 nvidia-cublas-cu12==12.8.4.1
 nvidia-cuda-cupti-cu12==12.8.90
 nvidia-cuda-nvrtc-cu12==12.8.93
