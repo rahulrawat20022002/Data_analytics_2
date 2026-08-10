@@ -131,11 +131,15 @@ generation, judging and evaluation all run locally on Ollama:
    PINECONE_REGION=us-east-1
    ```
 
-5. Pull the local model and the German spaCy pipeline -:
+5. Pull the local models and the German spaCy pipeline -:
    ```bash
-   ollama pull mistral:7b
+   ollama pull mistral:7b              # generation (~4GB)
+   ollama pull qwen2.5:14b-instruct    # judge, must differ from the above (~9GB)
    python -m spacy download de_core_news_sm
    ```
+   Both models are Ollama models and run locally side by side — nothing is sent
+   over the network. The judge is deliberately a *different, stronger* model; see
+   [Evaluation & LLM-as-Judge](#-evaluation--llm-as-judge) for why.
 
 Models, languages, index name and evaluation thresholds are all set in
 `config.yaml` — no need to edit agent code to change them.
@@ -207,6 +211,26 @@ Two distinct judges, plus a metrics harness:
   A/B, scoring each answer independently to avoid position bias.
 * **`EvaluatorAgent`** — scores a *retrieval strategy* A/B (hybrid vs reranked).
 * **`EvalAgent`** — the harness that ties it together.
+
+### Why the judge is a different model
+
+`config.yaml` sets `llm.model: mistral:7b` for generation and
+`llm.judge_model: qwen2.5:14b-instruct` for judging. These must stay different.
+An LLM scoring its own output exhibits **self-preference bias**, and a same-model
+judge additionally shares the generator's blind spots — a claim the generator
+invented from a bad prior looks well-grounded to a judge holding that same prior,
+corrupting the exact dimension the judge exists to measure. A *stronger* judge
+matters as much as a *different* one: 7B models are poorly calibrated on a 1–5 scale.
+
+If the two are ever set equal, the judge prints a warning at startup, every result
+carries `self_judged: true`, and the Markdown report opens with a warning banner —
+the run still works, but it is never silently presented as neutral. A missing judge
+model is a hard failure rather than a fallback to the generation model, for the
+same reason.
+
+Two cross-checks are independent of the judge entirely: `language_check` (no LLM
+involved) and `context_utilisation` (embedding-based groundedness). A high judge
+groundedness score alongside low context utilisation is your self-preference tell.
 
 Run the full evaluation:
 

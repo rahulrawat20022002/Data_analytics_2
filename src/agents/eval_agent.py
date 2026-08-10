@@ -395,6 +395,11 @@ class EvalAgent:
             "config": {
                 "generation_model": config_loader.get("llm.model"),
                 "judge_model": config_loader.get("llm.judge_model"),
+                # Flagged in the report because self-judged scores are inflated
+                # and should not be compared against independently judged runs.
+                "self_judged": (
+                    config_loader.get("llm.judge_model") == config_loader.get("llm.model")
+                ),
                 "embedding_model": config_loader.get("embedding.model"),
                 "index": config_loader.get("retrieval.index_name"),
                 "alpha": config_loader.get("retrieval.alpha"),
@@ -425,6 +430,14 @@ class EvalAgent:
         lines.append("")
 
         cfg = report["config"]
+        if cfg.get("self_judged"):
+            lines.append(
+                "> ⚠️ **Self-judged run.** The judge and the generator are the same "
+                "model, so rubric scores are inflated by self-preference bias and "
+                "are not comparable with independently judged runs."
+            )
+            lines.append("")
+
         lines.append("## Configuration")
         lines.append("")
         lines.append("| Setting | Value |")
