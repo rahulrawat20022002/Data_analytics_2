@@ -125,8 +125,11 @@ def memory_node(state: MasterState) -> Dict[str, Any]:
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY") # PASTE YOUR PINECONE KEY
 PINECONE_REGION = os.getenv("PINECONE_REGION") or 'us-east-1'
 
-if "YOUR_PINECONE" in PINECONE_API_KEY:
-    raise ValueError("Pinecone API Key not set.")
+if not PINECONE_API_KEY or "YOUR_PINECONE" in PINECONE_API_KEY:
+    raise ValueError(
+        "Pinecone API Key not set. Create a .env file with "
+        "PINECONE_API_KEY=<your-key> (and optionally PINECONE_REGION)."
+    )
 
 # Initialize all agents
 print("Initializing agents with Ollama...")
