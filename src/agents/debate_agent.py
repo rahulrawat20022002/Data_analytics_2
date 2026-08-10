@@ -6,22 +6,37 @@ import operator
 from langgraph.graph import StateGraph, END
 import ollama
 
+import config_loader
+from language_agent import LanguageAgent
+
 class DebateState(TypedDict):
     query: str
     context: List[Dict[str, Any]]
     messages: Annotated[List[Dict[str, str]], operator.add]
     max_turns: int
+    language: str
 
 class DebateAgents:
-    MODEL_NAME = "mistral:7b"
     def __init__(self):
+        self.MODEL_NAME = config_loader.get("llm.model", "mistral:7b")
         try:
             ollama.show(self.MODEL_NAME)
         except Exception:
             print(f"❌ Error: Ollama model '{self.MODEL_NAME}' not found.")
             print(f"Please run 'ollama pull {self.MODEL_NAME}' in your terminal.")
             raise
+        self.language_agent = LanguageAgent()
         print(f"✅ DebateAgents initialized. Using Ollama model: {self.MODEL_NAME}")
+
+    def _language_directive(self, state: DebateState) -> str:
+        """Language instruction for debate turns.
+
+        The consensus turn produces the user-facing brief, so every turn is held
+        to the same language -- otherwise the editor has to translate mid-debate
+        and detail gets lost.
+        """
+        language = state.get('language', 'en')
+        return self.language_agent.instruction_for(language)
     def _format_context(self, context: List[Dict[str, Any]]) -> str:
         context_str = ""
         for i, doc in enumerate(context):
@@ -47,6 +62,7 @@ class DebateAgents:
         prompt = f"""
         [INST]
         You are Policy Analyst A (Proponent)... (rest of prompt)
+        {self._language_directive(state)}
         QUERY: {state['query']}
         CONTEXT:
         {context_str}
@@ -64,6 +80,7 @@ class DebateAgents:
         prompt = f"""
         [INST]
         You are Policy Analyst B (Critic)... (rest of prompt)
+        {self._language_directive(state)}
         QUERY: {state['query']}
         CONTEXT:
         {context_str}
@@ -81,6 +98,7 @@ class DebateAgents:
         prompt = f"""
         [INST]
         You are the Chief Policy Editor... (rest of prompt)
+        {self._language_directive(state)}
         QUERY: {state['query']}
         CONTEXT:
         {context_str}

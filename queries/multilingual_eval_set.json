@@ -1,0 +1,93 @@
+{
+  "description": "Evaluation set for the multilingual policy RAG pipeline. Paired English/German cases test that the same question is answered equally well in either language. Populate 'relevant_doc_ids' with chunk ids from results/classical_output.json to enable retrieval metrics (hit@k, MRR, nDCG); cases left unlabelled still produce generation, language and judge metrics.",
+  "schema": {
+    "id": "stable identifier for the case",
+    "query": "the question to ask",
+    "language": "expected answer language (ISO 639-1); auto-detected if omitted",
+    "pair_id": "links a question to its translation, so EN/DE performance can be compared directly",
+    "relevant_doc_ids": "optional list of ground-truth relevant chunk ids",
+    "reference_answer": "optional gold answer, enables answer-similarity scoring"
+  },
+  "cases": [
+    {
+      "id": "ai-policy-eu-us-en",
+      "pair_id": "ai-policy-eu-us",
+      "language": "en",
+      "query": "How do EU and US policies on artificial intelligence differ?",
+      "relevant_doc_ids": [],
+      "reference_answer": ""
+    },
+    {
+      "id": "ai-policy-eu-us-de",
+      "pair_id": "ai-policy-eu-us",
+      "language": "de",
+      "query": "Wie unterscheiden sich die Richtlinien der EU und der USA zur künstlichen Intelligenz?",
+      "relevant_doc_ids": [],
+      "reference_answer": ""
+    },
+    {
+      "id": "carbon-pricing-en",
+      "pair_id": "carbon-pricing",
+      "language": "en",
+      "query": "What mechanisms does the European Green Deal use for carbon pricing?",
+      "relevant_doc_ids": [],
+      "reference_answer": ""
+    },
+    {
+      "id": "carbon-pricing-de",
+      "pair_id": "carbon-pricing",
+      "language": "de",
+      "query": "Welche Mechanismen zur CO2-Bepreisung sieht der Europäische Grüne Deal vor?",
+      "relevant_doc_ids": [],
+      "reference_answer": ""
+    },
+    {
+      "id": "data-privacy-en",
+      "pair_id": "data-privacy",
+      "language": "en",
+      "query": "What obligations does the GDPR place on organisations processing personal data?",
+      "relevant_doc_ids": [],
+      "reference_answer": ""
+    },
+    {
+      "id": "data-privacy-de",
+      "pair_id": "data-privacy",
+      "language": "de",
+      "query": "Welche Pflichten legt die DSGVO Organisationen auf, die personenbezogene Daten verarbeiten?",
+      "relevant_doc_ids": [],
+      "reference_answer": ""
+    },
+    {
+      "id": "renewable-targets-en",
+      "pair_id": "renewable-targets",
+      "language": "en",
+      "query": "What renewable energy targets have been set and by when must they be met?",
+      "relevant_doc_ids": [],
+      "reference_answer": ""
+    },
+    {
+      "id": "renewable-targets-de",
+      "pair_id": "renewable-targets",
+      "language": "de",
+      "query": "Welche Ziele für erneuerbare Energien wurden festgelegt und bis wann müssen sie erreicht werden?",
+      "relevant_doc_ids": [],
+      "reference_answer": ""
+    },
+    {
+      "id": "unanswerable-en",
+      "pair_id": "unanswerable",
+      "language": "en",
+      "query": "What is the exact population of Mars according to these policy documents?",
+      "relevant_doc_ids": [],
+      "reference_answer": "The provided sources contain no information about the population of Mars."
+    },
+    {
+      "id": "unanswerable-de",
+      "pair_id": "unanswerable",
+      "language": "de",
+      "query": "Wie hoch ist laut diesen Dokumenten die genaue Einwohnerzahl des Mars?",
+      "relevant_doc_ids": [],
+      "reference_answer": "Die bereitgestellten Quellen enthalten keine Informationen über die Einwohnerzahl des Mars."
+    }
+  ]
+}
