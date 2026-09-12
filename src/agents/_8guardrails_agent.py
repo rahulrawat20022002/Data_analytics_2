@@ -29,7 +29,7 @@ class GuardrailsAgent:
             "act as",
             "roleplay as"
         ]
-        print("✅ GuardrailsAgent initialized.")
+        print("GuardrailsAgent initialized.")
 
     def check_query_for_injection(self, query: str) -> (bool, str):
         """
@@ -41,10 +41,10 @@ class GuardrailsAgent:
         query_lower = query.lower()
         for keyword in self.injection_keywords:
             if keyword in query_lower:
-                print(f"❌ Injection detected in query: '{keyword}'")
+                print(f"Injection detected in query: '{keyword}'")
                 return (False, f"Query blocked: Potential prompt injection detected ('{keyword}').")
         
-        print("✅ Query is safe.")
+        print("Query is safe.")
         return (True, "Query is safe.")
 
     def redact_pii_from_response(self, text: str) -> str:
@@ -57,9 +57,9 @@ class GuardrailsAgent:
             clean_text = pattern.sub(f"[{pii_type}_REDACTED]", clean_text)
         
         if clean_text != text:
-            print("⚠️ PII redacted from final response.")
+            print("PII redacted from final response.")
         else:
-            print("✅ Final response is clean.")
+            print("Final response is clean.")
             
         return clean_text
 

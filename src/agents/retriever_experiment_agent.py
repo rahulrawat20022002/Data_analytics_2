@@ -6,7 +6,7 @@ from typing import List, Dict, Any
 from dotenv import load_dotenv
 
 # Import our baseline retriever to get the initial candidates
-from retriever_agent import RetrieverAgent
+from _3retriever_agent import RetrieverAgent
 
 # Import the CrossEncoder model
 from sentence_transformers import CrossEncoder
@@ -30,7 +30,7 @@ class RetrieverExperimentAgent:
         """
         self.baseline_retriever = baseline_retriever
         self.reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
-        print("✅ RetrieverExperimentAgent (Reranker) initialized.")
+        print("RetrieverExperimentAgent (Reranker) initialized.")
 
     def search(self, query: str, top_k: int = 5, candidate_k: int = 25) -> List[Dict[str, Any]]:
         """
@@ -63,7 +63,7 @@ class RetrieverExperimentAgent:
         # Sort the candidates by the new rerank_score
         sorted_results = sorted(reranked_results, key=lambda x: x['rerank_score'], reverse=True)
         
-        print("✅ Reranking complete.")
+        print("Reranking complete.")
         
         # Return the new top_k results
         return sorted_results[:top_k]
@@ -116,11 +116,11 @@ def plot_comparison(comparison_data: Dict[str, Any], output_file: str):
         # Save the plot
         Path(output_file).parent.mkdir(parents=True, exist_ok=True)
         plt.savefig(output_file, dpi=100)
-        print("✅ Retrieval plot saved.")
+        print("Retrieval plot saved.")
         plt.close()
         
     except Exception as e:
-        print(f"❌ Error plotting retrieval comparison: {e}")
+        print(f"Error plotting retrieval comparison: {e}")
 
 # -----------------------------
         
@@ -170,9 +170,9 @@ if __name__ == "__main__":
         }, str(OUTPUT_FILE_PNG))
         # -------------------------------------
 
-        print(f"\n✅ Experiment complete. Compare results in {OUTPUT_FILE_JSON} and {OUTPUT_FILE_PNG}.")
+        print(f"\nExperiment complete. Compare results in {OUTPUT_FILE_JSON} and {OUTPUT_FILE_PNG}.")
 
     except Exception as e:
-        print(f"❌ An error occurred: {e}")
+        print(f"An error occurred: {e}")
     
     print("--- Retriever Experiment Agent Finished ---")

@@ -21,24 +21,24 @@ class VerifierAgent:
         try:
             ollama.show(self.LLM_MODEL_NAME)
         except Exception:
-            print(f"❌ Error: Ollama model '{self.LLM_MODEL_NAME}' not found.")
+            print(f"Error: Ollama model '{self.LLM_MODEL_NAME}' not found.")
             print(f"Please run 'ollama pull {self.LLM_MODEL_NAME}' in your terminal.")
             raise
         self.similarity_model = SentenceTransformer(self.SIMILARITY_MODEL)
-        print(f"✅ VerifierAgent initialized (similarity: {self.SIMILARITY_MODEL}).")
+        print(f"VerifierAgent initialized (similarity: {self.SIMILARITY_MODEL}).")
     def _load_json_data(self, file_path: str) -> List[Dict[str, Any]]:
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except FileNotFoundError:
-            print(f"❌ Error: {file_path} not found.")
+            print(f"Error: {file_path} not found.")
             return []
     def _load_text_data(self, file_path: str) -> str:
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 return f.read()
         except FileNotFoundError:
-            print(f"❌ Error: {file_path} not found.")
+            print(f"Error: {file_path} not found.")
             return ""
     def check_semantic_alignment(self, query: str, summary: str, threshold: float = 0.5) -> Dict[str, Any]:
         print("Running semantic alignment check...")
@@ -50,14 +50,14 @@ class VerifierAgent:
             "aligned": is_aligned,
             "score": cos_sim['score'],
             "threshold": threshold,
-            "pass": "✅" if is_aligned else "❌"
+            "pass": "PASS" if is_aligned else "FAIL"
         }
     def check_factuality_nli(self, context_docs: List[Dict[str, Any]], summary: str) -> Dict[str, Any]:
         print("Running factuality (LLM-as-Judge) check...")
         context_str = " ".join([doc['text'] for doc in context_docs])
         sentences = [s.strip() for s in re.split(r'[.!?]', summary) if s.strip()]
         if not sentences:
-            return {"check": "factuality_nli", "contradictions": 0, "total_sentences": 0, "pass": "✅"}
+            return {"check": "factuality_nli", "contradictions": 0, "total_sentences": 0, "pass": "PASS"}
         contradictions = 0
         nli_results = []
         for sentence in sentences:
@@ -100,7 +100,7 @@ class VerifierAgent:
             "contradictions": contradictions,
             "total_sentences": len(sentences),
             "results": nli_results,
-            "pass": "✅" if is_factual else "❌"
+            "pass": "PASS" if is_factual else "FAIL"
         }
     def check_citations(self, summary: str) -> Dict[str, Any]:
         print("Running citation check...")
@@ -109,7 +109,7 @@ class VerifierAgent:
         return {
             "check": "citation_check",
             "citations_found": len(citations_found),
-            "pass": "✅" if has_citations else "❌"
+            "pass": "PASS" if has_citations else "FAIL"
         }
     def run(self, query: str, context: List[Dict[str, Any]], summary: str) -> List[Dict[str, Any]]:
         metrics = []

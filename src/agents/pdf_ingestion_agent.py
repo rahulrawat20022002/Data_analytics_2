@@ -37,7 +37,7 @@ class PDFIngestionAgent:
             separators=["\n\n", "\n", ". ", " ", ""], # Define priority of separators
             length_function=len,
         )
-        print("✅ PDFIngestionAgent initialized.")
+        print("PDFIngestionAgent initialized.")
 
     def run(self, input_dir: str) -> List[Document]:
         """
@@ -50,7 +50,7 @@ class PDFIngestionAgent:
             A list of 'Document' objects, each representing a text chunk.
         """
         if not os.path.exists(input_dir) or not os.listdir(input_dir):
-            print(f"⚠️ Warning: Input directory '{input_dir}' is empty or doesn't exist.")
+            print(f"Warning: Input directory '{input_dir}' is empty or doesn't exist.")
             # --- THIS PRINT STATEMENT IS NOW DYNAMIC ---
             print(f"Please add your 10+ policy PDFs to this folder.")
             return []
@@ -67,7 +67,7 @@ class PDFIngestionAgent:
                 print(f"No PDFs found in {input_dir}.")
                 return []
         except Exception as e:
-            print(f"❌ Error loading PDFs: {e}")
+            print(f"Error loading PDFs: {e}")
             return []
             
         print(f"Loaded {len(documents)} pages from all PDF files.")
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     if document_chunks:
         # Save the output for review
         save_chunks_to_json(document_chunks, OUTPUT_CHUNKS_FILE)
-        print(f"\n✅ Successfully processed PDFs.")
+        print(f"\nSuccessfully processed PDFs.")
         print(f"Saved {len(document_chunks)} chunks to {OUTPUT_CHUNKS_FILE}")
     else:
         # --- THIS PRINT STATEMENT IS NOW DYNAMIC ---

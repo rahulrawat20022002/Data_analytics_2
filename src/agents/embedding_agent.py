@@ -45,7 +45,7 @@ class EmbeddingAgent:
         # text while quietly biasing the English side of the comparison.
         self.tfidf_vectorizer = TfidfVectorizer(max_df=0.95, min_df=2)
 
-        print(f"✅ EmbeddingAgent initialized with multilingual SBERT model: {sbert_model_name}")
+        print(f"EmbeddingAgent initialized with multilingual SBERT model: {sbert_model_name}")
 
     def load_data(self, input_file: str) -> List[str]:
         """
@@ -56,7 +56,7 @@ class EmbeddingAgent:
             with open(input_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
         except FileNotFoundError:
-            print(f"❌ Error: Input file not found at {input_file}")
+            print(f"Error: Input file not found at {input_file}")
             return []
         
         # Use the 'processed_text' which is clean and PII-redacted
@@ -98,7 +98,7 @@ class EmbeddingAgent:
                 doc_vectors.append(np.zeros(w2v_model.vector_size)) # Fallback for empty docs
         embeddings['word2vec'] = np.array(doc_vectors)
         
-        print("✅ All embeddings generated.")
+        print("All embeddings generated.")
         return embeddings
 
     def visualize_embeddings(self, embeddings: Dict[str, np.ndarray], output_file: str):
@@ -151,7 +151,7 @@ class EmbeddingAgent:
         Path(output_file).parent.mkdir(parents=True, exist_ok=True)
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
         plt.savefig(output_file, dpi=150)
-        print(f"✅ Visualization saved to {output_file}")
+        print(f"Visualization saved to {output_file}")
 
 if __name__ == "__main__":
     

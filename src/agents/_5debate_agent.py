@@ -7,7 +7,7 @@ from langgraph.graph import StateGraph, END
 import ollama
 
 import config_loader
-from language_agent import LanguageAgent
+from _1language_agent import LanguageAgent
 
 class DebateState(TypedDict):
     query: str

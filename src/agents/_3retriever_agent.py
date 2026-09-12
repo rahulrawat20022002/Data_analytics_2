@@ -14,7 +14,7 @@ from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
 
 import config_loader
-from language_agent import LanguageAgent
+from _1language_agent import LanguageAgent
 
 
 load_dotenv()
@@ -98,7 +98,7 @@ class RetrieverAgent:
         print("Connecting to Pinecone dense index...")
         self.pinecone_index = self._get_pinecone_index()
 
-        print(f"✅ RetrieverAgent initialized. Ready for hybrid search (alpha={self.alpha}).")
+        print(f"RetrieverAgent initialized. Ready for hybrid search (alpha={self.alpha}).")
 
     def _load_documents(self) -> List[Dict[str, Any]]:
         """Loads the processed chunks from 'classical_output.json'."""
@@ -106,7 +106,7 @@ class RetrieverAgent:
             with open(self.data_file, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except FileNotFoundError:
-            print(f"❌ Error: {self.data_file} not found. Run preprocessor_agent.py first.")
+            print(f"Error: {self.data_file} not found. Run preprocessor_agent.py first.")
             return []
 
     def _build_bm25_index(self, corpus: List[str]) -> BM25Okapi:
@@ -117,7 +117,7 @@ class RetrieverAgent:
         case-fold -- both of which hurt German recall noticeably.
         """
         if not corpus:
-            print("⚠️ Warning: Corpus is empty. BM25 index will be empty.")
+            print("Warning: Corpus is empty. BM25 index will be empty.")
             # Return a dummy/empty BM25 object
             return BM25Okapi([[]])
 
@@ -158,7 +158,7 @@ class RetrieverAgent:
         try:
             vectors = np.load(self.vector_file)
         except FileNotFoundError:
-            print(f"❌ Error: {self.vector_file} not found. Run embedding_agent.py first.")
+            print(f"Error: {self.vector_file} not found. Run embedding_agent.py first.")
             return None
 
         print(f"Upserting {len(self.documents)} vectors to Pinecone... (This will take time)")
@@ -168,13 +168,13 @@ class RetrieverAgent:
         # ever raising an error.
         if vectors.shape[0] != len(self.documents):
             print(
-                f"❌ Vector/document count mismatch: {vectors.shape[0]} vectors vs "
+                f"Vector/document count mismatch: {vectors.shape[0]} vectors vs "
                 f"{len(self.documents)} documents. Re-run embedding_agent.py."
             )
             return None
         if vectors.shape[1] != self.dimension:
             print(
-                f"❌ Embedding dimension mismatch: file has {vectors.shape[1]}, "
+                f"Embedding dimension mismatch: file has {vectors.shape[1]}, "
                 f"index expects {self.dimension}. Re-run embedding_agent.py with "
                 f"the configured model '{self.model_name}'."
             )
@@ -200,7 +200,7 @@ class RetrieverAgent:
             index.upsert(vectors=batch)
             print(f"  ...upserted batch {i//batch_size + 1}")
             
-        print("✅ Pinecone upsert complete.")
+        print("Pinecone upsert complete.")
         return index
 
     def _format_result(self, doc_id: str, score: float) -> Optional[Dict[str, Any]]:
@@ -245,6 +245,11 @@ class RetrieverAgent:
             language = self.language_agent.detect(query)
 
         # Encode with the pre-loaded multilingual model.
+
+        #Main code here
+
+
+        
         query_vector = self.encoder.encode(query).tolist()
 
         query_kwargs: Dict[str, Any] = {
@@ -343,6 +348,6 @@ if __name__ == "__main__":
             print(f"\n--- Cross-lingual overlap: {len(overlap)}/3 documents shared ---")
 
     except Exception as e:
-        print(f"❌ An error occurred: {e}")
+        print(f"An error occurred: {e}")
     
     print("--- Retriever Agent Finished ---")

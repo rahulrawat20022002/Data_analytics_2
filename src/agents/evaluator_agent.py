@@ -24,10 +24,10 @@ class EvaluatorAgent:
         try:
             ollama.show(self.MODEL_NAME)
         except Exception:
-            print(f"❌ Error: Ollama model '{self.MODEL_NAME}' not found.")
+            print(f"Error: Ollama model '{self.MODEL_NAME}' not found.")
             print(f"Please run 'ollama pull {self.MODEL_NAME}' in your terminal.")
             raise
-        print(f"✅ EvaluatorAgent initialized. Using Ollama model: {self.MODEL_NAME}")
+        print(f"EvaluatorAgent initialized. Using Ollama model: {self.MODEL_NAME}")
 
     def _format_results(self, results: List[Dict[str, Any]]) -> str:
         """Formats a list of retrieved docs for the prompt."""
@@ -110,7 +110,7 @@ class EvaluatorAgent:
             parsed = self._parse_json(raw)
 
             if not parsed:
-                print("⚠️ Evaluator returned unparseable output; keeping raw text.")
+                print("Evaluator returned unparseable output; keeping raw text.")
                 return {
                     "evaluator_ok": False,
                     "winner": "undecided",
@@ -122,7 +122,7 @@ class EvaluatorAgent:
             if winner not in {"baseline", "advanced", "tie"}:
                 winner = "undecided"
 
-            print(f"✅ Evaluation complete. Winner: {winner}")
+            print(f"Evaluation complete. Winner: {winner}")
             return {
                 "evaluator_ok": True,
                 "winner": winner,
@@ -133,7 +133,7 @@ class EvaluatorAgent:
             }
 
         except Exception as e:
-            print(f"❌ Error during LLM evaluation: {e}")
+            print(f"Error during LLM evaluation: {e}")
             return {
                 "evaluator_ok": False,
                 "winner": "undecided",
@@ -173,7 +173,7 @@ if __name__ == "__main__":
             with open(INPUT_FILE, 'r', encoding='utf-8') as f:
                 comparison_data = json.load(f)
         except FileNotFoundError:
-            print(f"❌ Error: {INPUT_FILE} not found. Run 'retriever_experiment_agent.py' first.")
+            print(f"Error: {INPUT_FILE} not found. Run 'retriever_experiment_agent.py' first.")
             exit()
 
         # 2. Run evaluation

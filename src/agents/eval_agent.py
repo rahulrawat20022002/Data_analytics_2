@@ -29,8 +29,8 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 
 import config_loader
-from judge_agent import JudgeAgent
-from language_agent import LanguageAgent
+from _7judge_agent import JudgeAgent
+from _1language_agent import LanguageAgent
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 
@@ -147,7 +147,7 @@ class EvalAgent:
         # collected quickly without paying for an LLM call per query.
         self.judge = JudgeAgent() if use_judge else None
 
-        print("✅ EvalAgent initialized.")
+        print("EvalAgent initialized.")
 
     # --- embedding-based metrics ------------------------------------------
 
@@ -384,7 +384,7 @@ class EvalAgent:
             try:
                 outcome = run_fn(query, language)
             except Exception as e:
-                print(f"❌ Pipeline failed on this case: {e}")
+                print(f"Pipeline failed on this case: {e}")
                 outcome = {"answer": "", "retrieved_docs": [], "error": str(e)}
             outcome.setdefault("latency_ms", round((time.time() - start) * 1000, 2))
 
@@ -416,12 +416,12 @@ class EvalAgent:
         self.report_json.parent.mkdir(parents=True, exist_ok=True)
         with open(self.report_json, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
-        print(f"\n✅ JSON report written to {self.report_json}")
+        print(f"\nJSON report written to {self.report_json}")
 
         markdown = self.render_markdown(report)
         with open(self.report_markdown, "w", encoding="utf-8") as f:
             f.write(markdown)
-        print(f"✅ Markdown report written to {self.report_markdown}")
+        print(f"Markdown report written to {self.report_markdown}")
 
     def render_markdown(self, report: Dict[str, Any]) -> str:
         """Renders a human-readable summary table."""
@@ -432,7 +432,7 @@ class EvalAgent:
         cfg = report["config"]
         if cfg.get("self_judged"):
             lines.append(
-                "> ⚠️ **Self-judged run.** The judge and the generator are the same "
+                "> **Self-judged run.** The judge and the generator are the same "
                 "model, so rubric scores are inflated by self-preference bias and "
                 "are not comparable with independently judged runs."
             )

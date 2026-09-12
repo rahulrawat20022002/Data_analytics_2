@@ -47,7 +47,7 @@ class TopicModelAgent:
             random_state=42,
             n_jobs=-1  # Use all available CPUs
         )
-        print(f"✅ TopicModelAgent initialized for {self.n_topics} topics.")
+        print(f"TopicModelAgent initialized for {self.n_topics} topics.")
 
     def load_data(self, input_file: str) -> List[str]:
         """
@@ -58,7 +58,7 @@ class TopicModelAgent:
             with open(input_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
         except FileNotFoundError:
-            print(f"❌ Error: Input file not found at {input_file}")
+            print(f"Error: Input file not found at {input_file}")
             print("Please run the 'preprocessor_agent.py' first.")
             return []
         
@@ -170,7 +170,7 @@ if __name__ == "__main__":
         # Save the visualization
         agent.save_visualization(lda_model, tfidf_data, vectorizer, str(OUTPUT_VIS_FILE))
         
-        print(f"\n✅ Successfully ran topic modeling.")
+        print(f"\nSuccessfully ran topic modeling.")
         print(f"Visualization saved to {OUTPUT_VIS_FILE}")
     else:
         print("\nNo data was processed.")

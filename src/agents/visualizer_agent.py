@@ -22,15 +22,15 @@ class VisualizerAgent:
         self.plot_dir.mkdir(parents=True, exist_ok=True)
         
         if not self.memory_file.exists():
-            print(f"⚠️ Warning: Memory file not found at {self.memory_file}")
+            print(f"Warning: Memory file not found at {self.memory_file}")
             self.memory_data = pd.DataFrame()
         else:
             # Load the memory logs into a pandas DataFrame for easy plotting
             try:
                 self.memory_data = pd.read_json(self.memory_file)
-                print(f"✅ VisualizerAgent initialized. Loaded {len(self.memory_data)} logs.")
+                print(f"VisualizerAgent initialized. Loaded {len(self.memory_data)} logs.")
             except ValueError:
-                print(f"⚠️ Warning: Memory file {self.memory_file} is empty or corrupt.")
+                print(f"Warning: Memory file {self.memory_file} is empty or corrupt.")
                 self.memory_data = pd.DataFrame()
 
     def plot_confidence_trajectory(self):
@@ -39,7 +39,7 @@ class VisualizerAgent:
         Saves to 'confidence_curve.png'.
         """
         if "confidence_score" not in self.memory_data.columns:
-            print("❌ Cannot plot confidence: 'confidence_score' not found in memory logs.")
+            print("Cannot plot confidence: 'confidence_score' not found in memory logs.")
             return
 
         print("Plotting confidence trajectory...")
@@ -68,7 +68,7 @@ class VisualizerAgent:
         
         output_file = self.plot_dir / "confidence_curve.png"
         plt.savefig(output_file)
-        print(f"✅ Confidence plot saved to {output_file}")
+        print(f"Confidence plot saved to {output_file}")
         plt.close()
 
     def plot_agent_graph(self):
@@ -110,7 +110,7 @@ class VisualizerAgent:
         
         output_file = self.plot_dir / "agent_graph.png"
         plt.savefig(output_file, bbox_inches="tight")
-        print(f"✅ Main agent graph saved to {output_file}")
+        print(f"Main agent graph saved to {output_file}")
         plt.close()
 
     # --- NEW PLOTTING FUNCTION ---
@@ -147,7 +147,7 @@ class VisualizerAgent:
         
         output_file = self.plot_dir / "debate_graph.png"
         plt.savefig(output_file, bbox_inches="tight")
-        print(f"✅ Debate graph saved to {output_file}")
+        print(f"Debate graph saved to {output_file}")
         plt.close()
     # -----------------------------
 

@@ -16,7 +16,7 @@ from typing import Any, Dict, List, Optional
 import ollama
 
 import config_loader
-from language_agent import LanguageAgent
+from _1language_agent import LanguageAgent
 
 # The rubric. Each dimension is scored on 1..judge_scale with a short rationale.
 RUBRIC: Dict[str, str] = {
@@ -58,7 +58,7 @@ class JudgeAgent:
             # available -- but the scores are optimistically biased and every
             # report must say so rather than presenting them as neutral.
             print(
-                f"⚠️ Judge model '{self.MODEL_NAME}' is the SAME as the generation "
+                f"Judge model '{self.MODEL_NAME}' is the SAME as the generation "
                 f"model. Scores will be inflated by self-preference bias. "
                 f"Set a different llm.judge_model in config.yaml."
             )
@@ -69,7 +69,7 @@ class JudgeAgent:
             # Deliberately fatal, and deliberately NOT falling back to the
             # generation model: a silent fallback would reintroduce self-judging
             # without appearing anywhere in the report.
-            print(f"❌ Error: Judge model '{self.MODEL_NAME}' is not available in Ollama.")
+            print(f"Error: Judge model '{self.MODEL_NAME}' is not available in Ollama.")
             print(f"Please run 'ollama pull {self.MODEL_NAME}' in your terminal.")
             print(
                 "  (This is a second local model, separate from the generation "
@@ -78,7 +78,7 @@ class JudgeAgent:
             raise
 
         self.language_agent = LanguageAgent()
-        print(f"✅ JudgeAgent initialized. Judge model: {self.MODEL_NAME}")
+        print(f"JudgeAgent initialized. Judge model: {self.MODEL_NAME}")
 
     # --- prompt construction ----------------------------------------------
 
@@ -197,7 +197,7 @@ class JudgeAgent:
         if not context:
             return self._empty_result(language, "No context supplied to judge against.")
 
-        print(f"⚖️  Judging answer with {self.MODEL_NAME}...")
+        print(f"Judging answer with {self.MODEL_NAME}...")
         prompt = self._build_prompt(query, context, answer, language)
 
         try:
@@ -211,12 +211,12 @@ class JudgeAgent:
             )
             raw = response["message"]["content"]
         except Exception as e:
-            print(f"❌ Judge LLM call failed: {e}")
+            print(f"Judge LLM call failed: {e}")
             return self._empty_result(language, f"Judge call failed: {e}")
 
         parsed = self._parse_response(raw)
         if not parsed:
-            print("❌ Judge returned unparseable output.")
+            print("Judge returned unparseable output.")
             return self._empty_result(language, "Judge returned unparseable output.")
 
         scores: Dict[str, Any] = {}
@@ -256,7 +256,7 @@ class JudgeAgent:
         }
 
         if overall is not None:
-            print(f"✅ Judge overall score: {overall}/{self.scale}")
+            print(f"Judge overall score: {overall}/{self.scale}")
         return result
 
     def _empty_result(self, language: str, reason: str) -> Dict[str, Any]:

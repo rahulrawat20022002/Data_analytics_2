@@ -20,7 +20,7 @@ class MemoryAgent:
         if not self.memory_file.exists():
             with open(self.memory_file, 'w', encoding='utf-8') as f:
                 json.dump([], f)
-        print(f"✅ MemoryAgent initialized. Logging to {self.memory_file}")
+        print(f"MemoryAgent initialized. Logging to {self.memory_file}")
 
     def _load_memory(self) -> List[Dict[str, Any]]:
         """Loads the current memory log from the JSON file."""
@@ -31,7 +31,7 @@ class MemoryAgent:
                     return [] # Start fresh if file is corrupt
                 return memory
         except json.JSONDecodeError:
-            print("⚠️ Warning: Memory file corrupted. Starting fresh.")
+            print("Warning: Memory file corrupted. Starting fresh.")
             return []
 
     def log_run(self, run_data: Dict[str, Any]):
@@ -53,9 +53,9 @@ class MemoryAgent:
         try:
             with open(self.memory_file, 'w', encoding='utf-8') as f:
                 json.dump(memory, f, indent=2)
-            print("✅ Log entry saved.")
+            print("Log entry saved.")
         except Exception as e:
-            print(f"❌ Error saving memory: {e}")
+            print(f"Error saving memory: {e}")
 
     def get_all_logs(self) -> List[Dict[str, Any]]:
         """Returns all logs for analysis."""

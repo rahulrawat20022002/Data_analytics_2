@@ -7,7 +7,7 @@ import ollama
 from dotenv import load_dotenv
 
 import config_loader
-from language_agent import LanguageAgent
+from _1language_agent import LanguageAgent
 
 load_dotenv()
 class PlannerAgent:
@@ -16,11 +16,11 @@ class PlannerAgent:
         try:
             ollama.show(self.MODEL_NAME)
         except Exception:
-            print(f"❌ Error: Ollama model '{self.MODEL_NAME}' not found.")
+            print(f"Error: Ollama model '{self.MODEL_NAME}' not found.")
             print(f"Please run 'ollama pull {self.MODEL_NAME}' in your terminal.")
             raise
         self.language_agent = LanguageAgent()
-        print(f"✅ PlannerAgent initialized. Using Ollama model: {self.MODEL_NAME}")
+        print(f"PlannerAgent initialized. Using Ollama model: {self.MODEL_NAME}")
     def detect_language(self, query: str) -> str:
         """Delegates to LanguageAgent so detection rules live in one place."""
         lang = self.language_agent.detect(query)
@@ -59,10 +59,10 @@ class PlannerAgent:
             plan = json.loads(generated_text)
             if "sub_queries" not in plan or not plan["sub_queries"]:
                  raise ValueError("LLM returned an invalid plan.")
-            print("✅ Query decomposed successfully.")
+            print("Query decomposed successfully.")
             return plan
         except Exception as e:
-            print(f"❌ Error during LLM decomposition: {e}")
+            print(f"Error during LLM decomposition: {e}")
             return {"original_query": query, "sub_queries": [query]}
     def run(self, complex_query: str, language: str = None) -> Dict[str, Any]:
         lang = language or self.detect_language(complex_query)

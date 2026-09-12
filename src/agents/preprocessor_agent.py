@@ -5,7 +5,7 @@ import re    # For PII redaction (regex)
 from pathlib import Path
 from typing import List, Dict, Any
 
-from language_agent import LanguageAgent
+from _1language_agent import LanguageAgent
 
 class PreprocessorAgent:
     """
@@ -30,7 +30,7 @@ class PreprocessorAgent:
         # spaCy pipelines are loaded on first use and cached, so a corpus that
         # is 95% English never pays to load the German model until it needs it.
         self._pipelines: Dict[str, Any] = {}
-        print("✅ PreprocessorAgent initialized (multilingual).")
+        print("PreprocessorAgent initialized (multilingual).")
 
     def _get_pipeline(self, lang: str):
         """Returns a cached spaCy pipeline for `lang`, falling back sensibly.
@@ -53,7 +53,7 @@ class PreprocessorAgent:
                 print(f"  - Loaded spaCy pipeline '{model_name}' for '{lang}'.")
             except OSError:
                 print(
-                    f"⚠️ spaCy model '{model_name}' not installed for '{lang}'. "
+                    f"spaCy model '{model_name}' not installed for '{lang}'. "
                     f"Run: python -m spacy download {model_name}"
                 )
 
@@ -133,7 +133,7 @@ class PreprocessorAgent:
             with open(input_file, 'r', encoding='utf-8') as f:
                 raw_chunks = json.load(f)
         except FileNotFoundError:
-            print(f"❌ Error: Input file not found at {input_file}")
+            print(f"Error: Input file not found at {input_file}")
             print("Please run the 'pdf_ingestion_agent.py' first.")
             return []
         
@@ -145,7 +145,7 @@ class PreprocessorAgent:
                 print(f"  ...processed {i+1}/{len(raw_chunks)} chunks")
             processed_data.append(self.process_chunk(chunk))
 
-        print("✅ Processing complete.")
+        print("Processing complete.")
         self._report_language_distribution(processed_data)
         return processed_data
 
@@ -193,7 +193,7 @@ if __name__ == "__main__":
     if processed_chunks:
         # Save the output
         save_processed_data(processed_chunks, str(OUTPUT_FILE))
-        print(f"\n✅ Successfully processed data.")
+        print(f"\nSuccessfully processed data.")
         print(f"Saved {len(processed_chunks)} processed chunks to {OUTPUT_FILE}")
     else:
         print("\nNo data was processed. Check input file.")

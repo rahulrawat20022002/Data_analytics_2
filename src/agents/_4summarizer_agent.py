@@ -5,7 +5,7 @@ from typing import List, Dict, Any
 import ollama
 
 import config_loader
-from language_agent import LanguageAgent
+from _1language_agent import LanguageAgent
 
 class SummarizerAgent:
     def __init__(self):
@@ -13,11 +13,13 @@ class SummarizerAgent:
         try:
             ollama.show(self.MODEL_NAME)
         except Exception:
-            print(f"❌ Error: Ollama model '{self.MODEL_NAME}' not found.")
+            print(f"Error: Ollama model '{self.MODEL_NAME}' not found.")
             print(f"Please run 'ollama pull {self.MODEL_NAME}' in your terminal.")
             raise
         self.language_agent = LanguageAgent()
-        print(f"✅ SummarizerAgent initialized. Using Ollama model: {self.MODEL_NAME}")
+        print(f"SummarizerAgent initialized. Using Ollama model: {self.MODEL_NAME}")
+    #code->
+    
     def _format_context(self, retrieved_docs: List[Dict[str, Any]]) -> str:
         context_str = ""
         for i, doc in enumerate(retrieved_docs):
@@ -80,8 +82,8 @@ class SummarizerAgent:
                 messages=[{'role': 'user', 'content': prompt}]
             )
             summary = response['message']['content']
-            print("✅ Summary generated successfully.")
+            print("Summary generated successfully.")
             return summary
         except Exception as e:
-            print(f"❌ Error during LLM summarization: {e}")
+            print(f"Error during LLM summarization: {e}")
             return "Error: Could not generate summary."

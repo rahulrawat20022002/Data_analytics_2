@@ -35,7 +35,7 @@ class LanguageAgent:
         self.names: Dict[str, str] = dict(cfg.get("names", {}))
         self.spacy_models: Dict[str, str] = dict(cfg.get("spacy_models", {}))
         print(
-            "✅ LanguageAgent initialized. "
+            "LanguageAgent initialized. "
             f"First-class languages: {', '.join(self.supported)} "
             f"(default: {self.default})"
         )
@@ -131,7 +131,7 @@ class LanguageAgent:
             "detected": detected,
             "confidence": round(probability, 4),
             "match": matches,
-            "pass": "✅" if matches else "❌",
+            "pass": "PASS" if matches else "FAIL",
         }
 
 

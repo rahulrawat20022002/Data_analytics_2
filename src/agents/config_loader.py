@@ -1,6 +1,6 @@
 """Loads config.yaml once and shares it across agents.
 
-The agents in this package are imported as flat siblings (``from planner_agent
+The agents in this package are imported as flat siblings (``from _2planner_agent
 import PlannerAgent``), so this module follows the same convention.
 """
 
@@ -68,9 +68,9 @@ def get_config(reload: bool = False) -> Dict[str, Any]:
         with open(CONFIG_FILE, "r", encoding="utf-8") as f:
             file_config = yaml.safe_load(f) or {}
     except FileNotFoundError:
-        print(f"⚠️ {CONFIG_FILE} not found. Using built-in defaults.")
+        print(f"{CONFIG_FILE} not found. Using built-in defaults.")
     except yaml.YAMLError as e:
-        print(f"⚠️ Could not parse {CONFIG_FILE} ({e}). Using built-in defaults.")
+        print(f"Could not parse {CONFIG_FILE} ({e}). Using built-in defaults.")
 
     _cache = _merge(_DEFAULTS, file_config)
     return _cache
